@@ -5,8 +5,7 @@ class Console {
     public int version;
 
     public Console(int version) {
-        this("Nintendo");
-        this.version = 3;
+        this.version = version;
     }
 
     public Console() {

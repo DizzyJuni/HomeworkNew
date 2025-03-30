@@ -2,7 +2,7 @@ package Lesson_3.robot;
 
 public class Main {
     public static void main(String[] args) {
-        robot robot = new robot(5,5, Lesson_3.robot.robot.Direction.Up);
+        Robot robot = new Robot(5,5, Robot.Direction.Up);
         System.out.println("X= " + robot.getX() + " Y= " + robot.getY());
         robot.turnLeft();
         System.out.println("X= " + robot.getX() + " Y= " + robot.getY());

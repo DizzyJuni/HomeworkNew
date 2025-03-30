@@ -1,8 +1,8 @@
 package Lesson_3.robot;
 
-class robot {
-    public int x = 5;
-    public int y = 5;
+class Robot {
+    public int x ;
+    public int y ;
     public Direction direction = Direction.Up;
 
     public enum Direction {
@@ -12,7 +12,7 @@ class robot {
         Right
     }
 
-    public robot(int x, int y, Direction direction) {
+    public Robot(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -44,7 +44,6 @@ class robot {
             case Right:
                 direction = Direction.Up;
                 break;
-            default:
         }
     }
 
@@ -62,7 +61,6 @@ class robot {
             case Left:
                 direction = Direction.Up;
                 break;
-            default:
         }
     }
 
@@ -80,55 +78,48 @@ class robot {
             case Up:
                 y++;
                 break;
-            default:
         }
     }
 
-    public void moveRobot(robot robot, int toX, int toY) {
-        int tx = robot.getX();
-        int ty = robot.getY();
+    public void moveRobot(Robot robot, int toX, int toY) {
 
-        if (tx >= toX) {
+        if (getX() >= toX) {
             while (robot.getDirection() != Direction.Left) {
                 turnLeft();
             }
-            while (tx != toX) {
+            while (getX() != toX) {
                 stepForward();
                 System.out.println("X= " + robot.getX() + " Y= " + robot.getY());
-                tx--;
             }
         } else {
             while (robot.getDirection() != Direction.Right) {
                 turnRight();
             }
 
-            while (tx != toX) {
+            while (getX() != toX) {
                 stepForward();
                 System.out.println("X= " + robot.getX() + " Y= " + robot.getY());
-                tx++;
             }
         }
 
 
-        if (ty >= toY) {
+        if (getY() >= toY) {
             while (robot.getDirection() != Direction.Down) {
                 turnRight();
             }
 
-            while (ty != toY) {
+            while (getY() != toY) {
                 stepForward();
                 System.out.println("X= " + robot.getX() + " Y= " + robot.getY());
-                ty--;
             }
         } else {
             while (robot.getDirection() != Direction.Up) {
                 turnLeft();
             }
 
-            while (ty != toY) {
+            while (getY() != toY) {
                 stepForward();
                 System.out.println("X= " + robot.getX() + " Y= " + robot.getY());
-                ty++;
             }
         }
     }

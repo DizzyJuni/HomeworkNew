@@ -11,11 +11,11 @@ public class Engine {
         this.company = company;
     }
 
-    public void start() {
+    public static void start() {
         System.out.println("Engine is starting");
     }
 
-    public void stop() {
+    public static void stop() {
         System.out.println("Engine is stopping");
     }
 

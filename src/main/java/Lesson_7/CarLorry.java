@@ -6,7 +6,7 @@ public class CarLorry extends Car {
     public final int carrying;
 
     public CarLorry(String model, int weight, Driver driver, Engine engine, int power, String company, int carrying) {
-        super(model, weight, driver, engine, power, company);
+        super(model, weight, driver, engine);
         this.carrying = carrying;
     }
 

@@ -1,44 +1,28 @@
 package Lesson_7;
 
-public class Car extends Engine {
+public class Car {
     private final String model;
     private final int weight;
     private Driver driver;
     private Engine engine;
 
-    public Car(String model, int weight, Driver driver, Engine engine, int power, String company) {
-        super(power, company);
+    public Car(String model, int weight, Driver driver, Engine engine) {
+
         this.model = model;
         this.weight = weight;
         this.driver = driver;
         this.engine = engine;
     }
 
-    public Driver getDriver() {
-        return driver;
-    }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
-    }
-
-    public Engine getEngine() {
-        return engine;
-    }
-
-    public void setEngine(Engine engine){
-        this.engine = engine;
-    }
-
-    @Override
     public void start() {
-        super.start();
+        Engine.start();
         System.out.println("Car is starting");
     }
 
-    @Override
+
     public void stop() {
-        super.stop();
+        Engine.stop();
         System.out.println("Car is stopping");
     }
 
@@ -48,16 +32,6 @@ public class Car extends Engine {
 
     public void turnRight() {
         System.out.println("Going to right");
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Car clone = (Car) super.clone();
-        Driver driverClone = (Driver) this.driver.clone();
-        clone.setDriver(driverClone);
-        Engine engineClone = (Engine) this.engine.clone();
-        clone.setEngine(engineClone);
-        return clone;
     }
 
     @Override

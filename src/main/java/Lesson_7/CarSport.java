@@ -5,8 +5,8 @@ import java.util.Objects;
 public class CarSport extends Car {
     private final int speedLimit;
 
-    public CarSport(String model, int weight, Driver driver, Engine engine, int power, String company, int speedLimit) {
-        super(model, weight, driver, engine, power, company);
+    public CarSport(String model, int weight, Driver driver, Engine engine, int speedLimit) {
+        super(model, weight, driver, engine);
         this.speedLimit = speedLimit;
     }
 

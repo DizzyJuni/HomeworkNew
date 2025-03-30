@@ -2,7 +2,7 @@ package Lesson_7;
 
 import java.util.Objects;
 
-public class Person {
+public class Person implements Cloneable{
     private String lastName;
     private String firstName;
     private String surName;
@@ -13,6 +13,11 @@ public class Person {
         this.firstName = firstName;
         this.surName = surName;
         this.age = age;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override

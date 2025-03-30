@@ -1,5 +1,7 @@
 package Lesson_4.shape;
 
+import static Lesson_4.shape.Shape.printArea;
+
 public class Main {
     public static void main(String[] args) {
         Square square1 = new Square(4);
@@ -8,11 +10,6 @@ public class Main {
         printArea(square1);
         printArea(circle1);
         printArea(rectangle1);
-    }
-
-    public static void printArea(Shape shape) {
-        shape.area();
-        System.out.println(shape.area());
     }
 }
 

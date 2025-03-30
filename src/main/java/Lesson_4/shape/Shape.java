@@ -1,6 +1,11 @@
 package Lesson_4.shape;
 
 public interface Shape {
+    static void printArea(Shape shape) {
+        shape.area();
+        System.out.println(shape.area());
+    }
+
     double area();
 }
 
@@ -41,7 +46,10 @@ class Rectangle implements Shape {
     public double area() {
         return length * width;
     }
+
 }
+
+
 
 
 

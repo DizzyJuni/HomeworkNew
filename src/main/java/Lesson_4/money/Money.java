@@ -29,7 +29,7 @@ class Money {
     }
 
     public Money minus(Money other) {
-        if (this.rub - other.rub > 0) {
+        if (this.rub - other.rub >= 0) {
             if (this.penny < other.penny) {
                 Money minus1 = new Money(this.rub - 1 - other.rub, this.penny + 100 - other.penny);
                 return minus1;

@@ -8,11 +8,10 @@ public class Main {
         printArea(square1);
         printArea(circle1);
         printArea(rectangle1);
+
     }
 
     public static void printArea(Shape shape) {
-        shape.area();
         System.out.println(shape.area());
     }
 }
-

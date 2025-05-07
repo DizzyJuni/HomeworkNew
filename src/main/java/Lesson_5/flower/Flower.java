@@ -17,17 +17,3 @@ public class Flower {
     }
 }
 
-class Rose extends Flower {
-
-    public Rose(String country, int price) {
-        super(country, price);
-    }
-}
-
-class Tulips extends Flower {
-
-    Tulips(String country, int price) {
-        super(country, price);
-    }
-}
-

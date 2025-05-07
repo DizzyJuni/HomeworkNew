@@ -1,29 +1,29 @@
 package Lesson_5.Fruit;
 
 public abstract class Fruit {
-    private int weight;
-    private int price;
-    private static int totalPrice;
+    private final double weight;
+    private final double price;
+    private static double totalPrice;
 
-    public Fruit(int weight, int price) {
+    public Fruit(double weight, double price) {
         this.weight = weight;
         this.price = price;
         totalPrice += price();
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public static int totalPrice () {
+    public static double totalPrice () {
         return totalPrice;
     }
 
-    public abstract int price();
+    public abstract double price();
 
 }
 

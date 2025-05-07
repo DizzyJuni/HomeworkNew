@@ -14,7 +14,5 @@ public class Main {
 
         stringListPrinter.printList(true);
         stringListPrinter.printList(false);
-
-
     }
 }

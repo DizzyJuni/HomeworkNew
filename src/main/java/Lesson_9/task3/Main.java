@@ -1,7 +1,5 @@
 package Lesson_9.task3;
 
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
         DynamicArray<String> array = new DynamicArray<>();
@@ -16,7 +14,6 @@ public class Main {
         array.add("9");
         array.add("10");
         array.remove(4);
-
         System.out.println(array);
     }
 }

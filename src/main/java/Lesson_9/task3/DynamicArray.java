@@ -9,7 +9,6 @@ public class DynamicArray<T> {
     private T[] array;
     private int counter;
 
-
     public DynamicArray() {
         array = (T[]) new Object[0];
     }
@@ -52,8 +51,8 @@ public class DynamicArray<T> {
             Object[] temp = new Object[array.length + 1];
             System.arraycopy(array, 0, temp, 0, array.length);
             array = (T[]) temp;
-
         }
+
         array[counter++] = t;
         return true;
     }
@@ -77,7 +76,6 @@ public class DynamicArray<T> {
         array = (T[]) temp;
         counter = 0;
     }
-
 
     public T get(int index) {
         return array[index];

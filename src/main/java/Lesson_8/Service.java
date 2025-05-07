@@ -8,43 +8,40 @@ import Lesson_8.Exception.WrongPasswordException;
 import java.util.Arrays;
 import java.util.Objects;
 
-
 public class Service implements LoginService {
     private final int limit;
     private User user;
-    User[] database = new User[]{};
+    private final User[] database;
     private int counter;
-
 
     public Service(int limit) {
         this.limit = limit;
-        this.database = new User[limit + 1];
+        this.database = new User[limit];
     }
 
     @Override
-    public void register(final String login, final String password, final String confirmPassword)
-            throws WrongLoginException, WrongPasswordException, UserLimitExceededException {
+    public void register(final String login, final String password, final String confirmPassword) throws WrongLoginException, WrongPasswordException, UserLimitExceededException {
         validateLogin(login);
-        passwordUser(password);
-
-        if (password.hashCode() != confirmPassword.hashCode()) {
-            throw new WrongPasswordException("Password don't match with confirm password.");
-        }
+        validatePassword(password, confirmPassword);
         addUser(login, password);
-
     }
 
     @Override
     public void login(String login, String password) throws AuthException {
-        loginUser(login, password);
-      //  loginUser2(login, password);
+        for (User value : database) {
+            if (value != null && login.equals(value.getLogin()) && password.hashCode() == value.getPasswordHash()) {
+                System.out.println("Authorization [" + login + "] successes ");
+                return;
+            }
+        }
+        throw new AuthException("Authorization failed");
     }
 
     private void addUser(String login, String password) throws UserLimitExceededException {
-        this.database[counter++] = new User(login, password);
-        if (counter - 1 == limit) {
+        if (counter == limit) {
             throw new UserLimitExceededException("User limit exceeded. User limit " + limit);
         }
+        this.database[counter++] = new User(login, password.hashCode());
         System.out.println("User [" + login + "] registered.");
     }
 
@@ -68,13 +65,10 @@ public class Service implements LoginService {
         }
     }
 
-    private void passwordUser(String password) throws WrongPasswordException {
+    private void validatePassword(String password, String confirmPassword) throws WrongPasswordException {
         char[] pass = password.toCharArray();
-
-        for (int i = 0; i < pass.length; i++) {
-            if (pass.length < 10 || pass.length > 20) {
-                throw new WrongPasswordException("Password length is " + pass.length + ". Password should be more than 10 and less than 20.");
-            }
+        if (pass.length < 10 || pass.length > 20) {
+            throw new WrongPasswordException("Password length is " + pass.length + ". Password should be more than 10 and less than 20.");
         }
 
         for (char c : pass) {
@@ -83,16 +77,9 @@ public class Service implements LoginService {
             }
         }
 
-    }
-
-    private void loginUser(String login, String password) throws AuthException {
-        for (User value : database) {
-            if (value != null && login.equals(value.getLogin()) && password.equals(value.getPasswordHash()) ) {
-                System.out.println("Authorization [" + login + "] successes ");
-                return;
-            }
+        if (password.hashCode() != confirmPassword.hashCode()) {
+            throw new WrongPasswordException("Password don't match with confirm password.");
         }
-        throw new AuthException("Authorization failed");
     }
 
     @Override
@@ -106,7 +93,4 @@ public class Service implements LoginService {
     public int hashCode() {
         return Objects.hash(limit, user, Arrays.hashCode(database), counter);
     }
-
 }
-
-

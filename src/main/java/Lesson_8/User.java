@@ -5,10 +5,10 @@ import java.util.Objects;
 public class User {
 
     private final String login;
-    private final String passwordHash;
+    private final int passwordHash;
 
 
-    public User(String login, String passwordHash) {
+    public User(String login, int passwordHash) {
         this.login = login;
         this.passwordHash = passwordHash;
     }
@@ -17,7 +17,7 @@ public class User {
         return login;
     }
 
-    public String getPasswordHash() {
+    public int getPasswordHash() {
         return passwordHash;
     }
 
@@ -25,7 +25,7 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(passwordHash, user.passwordHash);
+        return passwordHash == user.passwordHash && Objects.equals(login, user.login);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
+                ", passwordHash=" + passwordHash +
                 '}';
     }
 }

@@ -12,4 +12,3 @@ public interface LoginService {
     void login (final String login, final String password)
         throws AuthException;
 }
-

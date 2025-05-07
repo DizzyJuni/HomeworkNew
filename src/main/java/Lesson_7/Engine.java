@@ -3,19 +3,19 @@ package Lesson_7;
 import java.util.Objects;
 
 public class Engine {
-    private int power;
-    private String company;
+    private final int power;
+    private final String company;
 
     public Engine(int power, String company) {
         this.power = power;
         this.company = company;
     }
 
-    public static void start() {
+    public void start() {
         System.out.println("Engine is starting");
     }
 
-    public static void stop() {
+    public  void stop() {
         System.out.println("Engine is stopping");
     }
 

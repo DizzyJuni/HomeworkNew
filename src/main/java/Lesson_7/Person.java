@@ -3,10 +3,10 @@ package Lesson_7;
 import java.util.Objects;
 
 public class Person implements Cloneable{
-    private String lastName;
-    private String firstName;
-    private String surName;
-    private int age;
+    private final String lastName;
+    private final String firstName;
+    private final String surName;
+    private final int age;
 
     public Person(String lastName, String firstName, String surName, int age) {
         this.lastName = lastName;

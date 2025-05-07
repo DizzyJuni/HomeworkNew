@@ -3,8 +3,8 @@ package Lesson_7;
 public class Car {
     private final String model;
     private final int weight;
-    private Driver driver;
-    private Engine engine;
+    private final Driver driver;
+    private final Engine engine;
 
     public Car(String model, int weight, Driver driver, Engine engine) {
 
@@ -16,13 +16,13 @@ public class Car {
 
 
     public void start() {
-        Engine.start();
+        engine.start();
         System.out.println("Car is starting");
     }
 
 
     public void stop() {
-        Engine.stop();
+        engine.stop();
         System.out.println("Car is stopping");
     }
 

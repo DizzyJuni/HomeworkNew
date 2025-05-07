@@ -5,7 +5,7 @@ import java.util.Objects;
 public class CarLorry extends Car {
     public final int carrying;
 
-    public CarLorry(String model, int weight, Driver driver, Engine engine, int power, String company, int carrying) {
+    public CarLorry(String model, int weight, Driver driver, Engine engine, int carrying) {
         super(model, weight, driver, engine);
         this.carrying = carrying;
     }

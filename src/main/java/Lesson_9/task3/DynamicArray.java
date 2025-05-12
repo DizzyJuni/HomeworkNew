@@ -2,12 +2,15 @@ package Lesson_9.task3;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
-public class DynamicArray<T> {
+public class DynamicArray<T> implements Iterable<T> {
 
     private T[] array;
     private int counter;
+    private int currentIndex = 0;
+    private int currentValue = 0;
 
     public DynamicArray() {
         array = (T[]) new Object[0];
@@ -95,7 +98,7 @@ public class DynamicArray<T> {
     }
 
     public T remove(int index) {
-        Object[] temp = new Object[array.length -1];
+        Object[] temp = new Object[array.length - 1];
         System.arraycopy(array, 0, temp, 0, index);
         System.arraycopy(array, index + 1, temp, index, array.length - index - 1);
         array = (T[]) temp;
@@ -119,6 +122,21 @@ public class DynamicArray<T> {
             }
         }
         return -1;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return (currentIndex++ != array.length);
+            }
+
+            @Override
+            public T next() {
+                return array[currentIndex - 1];
+            }
+        };
     }
 
     @Override

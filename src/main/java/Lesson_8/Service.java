@@ -10,7 +10,6 @@ import java.util.Objects;
 
 public class Service implements LoginService {
     private final int limit;
-    private User user;
     private final User[] database;
     private int counter;
 
@@ -86,11 +85,11 @@ public class Service implements LoginService {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Service service = (Service) o;
-        return limit == service.limit && counter == service.counter && Objects.equals(user, service.user) && Objects.deepEquals(database, service.database);
+        return limit == service.limit && counter == service.counter && Objects.deepEquals(database, service.database);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(limit, user, Arrays.hashCode(database), counter);
+        return Objects.hash(limit, Arrays.hashCode(database), counter);
     }
 }

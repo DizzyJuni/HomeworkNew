@@ -9,11 +9,12 @@ public class DynamicArray<T> implements Iterable<T> {
 
     private T[] array;
     private int counter;
-    private int currentIndex = 0;
-    private int currentValue = 0;
+    private static final int defaultCapacity = 10;
+    private static final int grow = 2;
 
     public DynamicArray() {
-        array = (T[]) new Object[0];
+        this.array = (T[]) new Object[defaultCapacity];
+        this.counter = 0;
     }
 
     public int size() {
@@ -26,7 +27,7 @@ public class DynamicArray<T> implements Iterable<T> {
 
     public boolean contains(Object o) {
         for (T t : array) {
-            if (o == t) {
+            if (o.equals(t)) {
                 System.out.println("Содержит такой элемент: " + o);
                 return true;
             }
@@ -51,11 +52,11 @@ public class DynamicArray<T> implements Iterable<T> {
 
     public boolean add(T t) {
         if (counter == array.length) {
-            Object[] temp = new Object[array.length + 1];
-            System.arraycopy(array, 0, temp, 0, array.length);
-            array = (T[]) temp;
+            int newCapacity = array.length * grow;
+            T[] temp = (T[]) new Object[newCapacity];
+            System.arraycopy(array, 0, temp, 0, counter);
+            array = temp;
         }
-
         array[counter++] = t;
         return true;
     }
@@ -127,14 +128,16 @@ public class DynamicArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
+            int currentValue = 0;
+
             @Override
             public boolean hasNext() {
-                return (currentIndex++ != array.length);
+                return currentValue < counter;
             }
 
             @Override
             public T next() {
-                return array[currentIndex - 1];
+                return array[currentValue++];
             }
         };
     }
@@ -153,8 +156,13 @@ public class DynamicArray<T> implements Iterable<T> {
 
     @Override
     public String toString() {
-        return "DynamicArray{" +
-                "array=" + Arrays.toString(array) +
-                '}';
+        String text = "DynamicArray{array=";
+        StringBuilder string = new StringBuilder("[");
+        for (int i = 0; i < counter; i++) {
+            string.append(array[i]);
+            if (i < counter - 1)
+                string.append(" ,");
+        }
+        return text + string.append("]").append("}").toString();
     }
 }

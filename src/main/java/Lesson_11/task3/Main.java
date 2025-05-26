@@ -1,26 +1,29 @@
 package Lesson_11.task3;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println(countVowels("qwerty"));
-        System.out.println(mostFrequentLetter("Level from easy"));
+        System.out.println(mostFrequentLetter("Level from easy,,,,,,"));
     }
 
     public static int countVowels(String input) {
+        Set<Character> vowels = new HashSet<>();
+        vowels.add('a');
+        vowels.add('e');
+        vowels.add('y');
+        vowels.add('u');
+        vowels.add('i');
+        vowels.add('o');
         int countVowels = 0;
-        String string = "aeyuio";
-        input = input.toLowerCase();
-        char[] str = input.toCharArray();
-        char[] array = string.toCharArray();
-        for (char s : str) {
-            for (char d : array) {
-                if (d == s) {
-                    countVowels++;
-                }
-            }
+        String lowerCase = input.toLowerCase();
+        for (char c : lowerCase.toCharArray()) {
+            if (vowels.contains(c))
+                countVowels++;
         }
         return countVowels;
     }
@@ -28,10 +31,13 @@ public class Main {
     public static char mostFrequentLetter(String s) {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
-            if (!map.containsKey(c)) {
-                map.put(c, 1);
-            } else {
-                map.put(c, map.get(c) + 1);
+            if (Character.isLetter(c)) {
+                char lowerChar = Character.toLowerCase(c);
+                if (map.containsKey(lowerChar)) {
+                    map.put(lowerChar, map.get(lowerChar) + 1);
+                } else {
+                    map.put(lowerChar, 1);
+                }
             }
         }
 

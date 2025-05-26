@@ -1,10 +1,6 @@
 package Lesson_10.task1;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-
-import static Lesson_10.task1.Box.filterBySize;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +8,7 @@ public class Main {
         list.add(new Box(10));
         list.add(new Box(20));
         list.add(new Box(30));
-        Collection<Box> result = filterBySize(list, 30);
+        Collection<Box> result = filterBySize(list,30);
         Collection<Box> result2 = filterBySize(list.iterator(), 30);
         System.out.println(result);
         System.out.println("------------------");
@@ -28,7 +24,6 @@ public class Main {
         while (!boxes1.isEmpty()) {
             System.out.println(boxes1.poll());
         }
-
         System.out.println("------------------");
 
         PriorityQueue<Box> boxes = new PriorityQueue<>(new BiggerBoxSizeComparator());
@@ -40,5 +35,21 @@ public class Main {
         while (!boxes.isEmpty()) {
             System.out.println(boxes.poll());
         }
+
+    }
+
+    public static Collection<Box> filterBySize(Collection<Box> collection, int size) {
+        return filterBySize(collection.iterator(), size);
+    }
+
+    public static Collection<Box> filterBySize(Iterator<Box> iterator, int size) {
+        Collection<Box> list = new ArrayList<>();
+        while (iterator.hasNext()) {
+            Box s = iterator.next();
+            if (s.size() < size) {
+                list.add(s);
+            }
+        }
+        return list;
     }
 }

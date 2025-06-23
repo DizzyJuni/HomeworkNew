@@ -17,6 +17,7 @@ public class Main {
             statement.execute("Create table if not exists faculty(id bigserial primary key, name text)");
             statement.execute("Drop table if exists groupstudent");
             statement.execute("Create table if not exists groupstudent (id bigserial primary key, name text, faculty_id bigint)");
+            statement.execute("Alter table groupstudent add constraint fk_groupstudent_faculty foreign key (faculty_id) references faculty (id)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

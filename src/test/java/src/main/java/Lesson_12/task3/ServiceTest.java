@@ -43,23 +43,33 @@ public class ServiceTest {
     }
 
     @ParameterizedTest(name = "{0}")
-    @DisplayName("Проверка метода регистрации")
+    @DisplayName("Проверка метода регистрации для логина")
     @CsvSource(
             {
                     "Логин меньше 4 символов, 123, 1234567890, 1234567890",
                     "Логин больше 20 символов, 123456789012345678901, 1234567890, 1234567890",
                     "Запрещенные символы в логине ,admin_1234!@#$% ,1234567890, 1234567890",
                     "Логин занят, admin_1234, 1234567890, 1234567890",
-                    "Пароль меньше 10 символов, admin_1234, 123, 123",
-                    "Пароль больше 20 символов, admin_1234, 123456789012345678901, 123456789012345678901",
-                    "Запрещенные символы в пароле, admin_1234, 1234567890!№%:, 1234567890!№%:",
-                    "Пароли не сопвпадают, admin_1234, 123, 1234",
                     "Пустой логин,'', 123, 123",
-                    "Пустой пароль, admin_1234, '', ''",
             }
     )
-    void registerTestCsv(String testName, String login, String password, String confirmPassword) {
+    void registerLoginTestCsv(String testName, String login, String password, String confirmPassword) {
         assertThrows(Lesson_8.Exception.WrongLoginException.class, () -> service.register(login, password, confirmPassword));
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @DisplayName("Проверка метода регистрации для пароля")
+    @CsvSource(
+            {
+                    "Пароль меньше 10 символов, admin_12345, 123, 123",
+                    "Пароль больше 20 символов, admin_12345, 123456789012345678901, 123456789012345678901",
+                    "Запрещенные символы в пароле, admin_12345, 1234567890!№%:, 1234567890!№%:",
+                    "Пароли не совпадают, admin_12345, 123, 1234",
+                    "Пустой пароль, admin_12345, '', ''",
+            }
+    )
+    void registerPasswordTestCsv2(String testName, String login, String password, String confirmPassword) {
+        assertThrows(Lesson_8.Exception.WrongPasswordException.class, () -> service.register(login, password, confirmPassword));
     }
 
     @Test

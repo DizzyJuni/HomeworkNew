@@ -81,6 +81,6 @@ public class ServiceTest {
     @Test
     @DisplayName("Успешная регистрация")
     void registerSuccessTest(){
-        assertDoesNotThrow(()-> service.register("user_1234", "1234567890", "1234567890"));
+        assertDoesNotThrow(()-> service.register("user_1234", "1234567890_@$", "1234567890_@$"));
     }
 }

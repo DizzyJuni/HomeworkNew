@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class TeacherRepository {
-    private ConnectionManager connectionManager;
+    private final ConnectionManager connectionManager;
 
     public TeacherRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
@@ -19,7 +19,7 @@ public class TeacherRepository {
     public void createTableTeacherIfNotExist() {
         try (Connection connection = connectionManager.getConnection()) {
             Statement statement = connection.createStatement();
-            statement.execute("DROP TABLE if exists teacher");
+            statement.execute("DROP TABLE if exists teacher Cascade");
             statement.execute("""
                     CREATE TABLE IF NOT exists teacher(
                     \tid bigserial PRIMARY KEY,
@@ -36,8 +36,8 @@ public class TeacherRepository {
         try (Connection connection = connectionManager.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("""
-                    CREATE TABLE IF NOT exists groups_to_teacher(
-                    \t group_id bigint references group ("id")
+                    CREATE TABLE IF NOT EXISTS groups_to_teacher(
+                    \t group_id bigint references "group" ("id"),
                     \t teacher_id bigint references teacher ("id")\s
                     );""");
             statement.execute("create index if not exists groups_id_group on groups_to_teacher (group_id);");

@@ -26,6 +26,7 @@ public class Main {
         groupRepository.createTableGroupIfNotExists();
         studentRepository.createTableStudentIfNotExists();
         teacherRepository.createTableTeacherIfNotExist();
+        teacherRepository.createTableGroupsToTeacherIfNotExists();
 
         facultyRepository.insertFaculty(List.of(
                 new Faculty("Economics"), new Faculty("History"), new Faculty("Biology")

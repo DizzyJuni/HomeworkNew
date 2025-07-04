@@ -6,6 +6,7 @@ import Lesson_14.BD.repository.GraduateRepository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class GraduateService {
     private final DataSource dataSource;
@@ -21,7 +22,7 @@ public class GraduateService {
             graduateRepository.createTableIfNotExists(connection);
             System.out.println("Таблица Graduate создана.");
         } catch (SQLException e) {
-            throw new RuntimeException("Таблица Graduate не создана.",e);
+            throw new RuntimeException("Таблица Graduate не создана.", e);
         }
     }
 
@@ -43,26 +44,30 @@ public class GraduateService {
         }
     }
 
-    public void deleteById(DataSource dataSource, Graduate graduate) {
+    public void deleteById(DataSource dataSource, Long id) {
         try (Connection connection = dataSource.getConnection()) {
-            graduateRepository.deleteById(connection, graduate);
-            System.out.println("Удаление по ID успешно.");
+            int counter = graduateRepository.deleteById(connection, id);
+            if (counter > 0) {
+                System.out.println("Удаление по ID успешно.");
+            } else {
+                System.out.println("ID не существует");
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Не успешное удаление.", e);
         }
     }
 
-    public void findAll(DataSource dataSource) {
+    public List<Graduate> findAll(DataSource dataSource) {
         try (Connection connection = dataSource.getConnection()) {
-            graduateRepository.findAll(connection);
+            return graduateRepository.findAll(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void findById(DataSource dataSource, Graduate graduate) {
+    public Graduate findById(DataSource dataSource, Long id) {
         try (Connection connection = dataSource.getConnection()) {
-            graduateRepository.findById(connection, graduate);
+            return graduateRepository.findById(connection, id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

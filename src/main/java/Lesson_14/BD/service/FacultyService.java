@@ -48,46 +48,24 @@ public class FacultyService {
         }
     }
 
-    public void deleteByName(DataSource dataSource, Faculty faculty) {
+    public void deleteByName(DataSource dataSource, String faculty) {
         try (Connection connection = dataSource.getConnection()) {
-            facultyRepository.deleteByName(connection, faculty);
-            System.out.println("Удаление по имени " + faculty.getName() + " успешно");
-        } catch (SQLException e) {
-            throw new RuntimeException("Удаление по имени " + faculty.getName() + " неуспешно", e);
-        }
-    }
-
-    public Faculty findByName(String name) throws SQLException {
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM faculty where name = ?");
-            preparedStatement.setString(1, name);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                List<Faculty> faculties = toFacultyList(rs);
-                if (faculties.isEmpty()) {
-                    throw new RuntimeException("Faculty not found by name: " + name);
-                }
-                if (faculties.size() > 1) {
-                    throw new RuntimeException("Found multiple faculties by name: " + name);
-                }
-                return faculties.getFirst();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            int counter = facultyRepository.deleteByName(connection, faculty);
+            if (counter > 0) {
+                System.out.println("Удаление по имени " + faculty + " успешно");
+            } else {
+                System.out.println("Факультет " + faculty + " не найден");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Удаление по имени " + faculty + " неуспешно", e);
         }
     }
 
-    private List<Faculty> toFacultyList(ResultSet rs) throws SQLException {
-        List<Faculty> result = new ArrayList<>();
-        while (rs.next()) {
-            result.add(toFaculty(rs));
+    public Faculty findByName(DataSource dataSource, String name) {
+        try (Connection connection = dataSource.getConnection()) {
+            return facultyRepository.findByName(connection, name);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return result;
-    }
-
-    private Faculty toFaculty(ResultSet rs) throws SQLException {
-        return new Faculty(
-                rs.getLong("id"),
-                rs.getString("name")
-        );
     }
 }

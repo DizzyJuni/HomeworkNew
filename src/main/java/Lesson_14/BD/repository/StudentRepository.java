@@ -51,24 +51,21 @@ public class StudentRepository {
         );
     }
 
-    public Student findByName(Connection connection, String name) throws SQLException {
+    public Student findFirstByName(Connection connection, String name) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "SELECT * FROM student WHERE name = ?;"
         );
         preparedStatement.setString(1, name);
-
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                return new Student(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getInt("age"),
-                        resultSet.getFloat("scholarship"),
-                        resultSet.getLong("group_id")
-                );
+            List<Student> studentList = toStudentList(resultSet);
+            if (studentList.isEmpty()) {
+                throw new RuntimeException("Студент " + name + " не найден");
             }
+            if (studentList.size() > 1) {
+                throw new RuntimeException("Найдено несколько студентов " + name);
+            }
+            return studentList.getFirst();
         }
-        throw new RuntimeException("Студент не найден");
     }
 
     public List<Student> findByGroupId(final Connection connection, Long groupId) throws SQLException {

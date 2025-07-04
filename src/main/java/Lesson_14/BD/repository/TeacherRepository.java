@@ -39,16 +39,35 @@ public class TeacherRepository {
 
     public void updateTeacher(Connection connection, Teacher teacher) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
-                "UPDATE FROM teacher SET name = ? WHERE id = ?;"
+                "UPDATE teacher SET name = ?, age = ? WHERE id = ?;"
         );
         preparedStatement.setString(1, teacher.getName());
-        preparedStatement.setLong(2, teacher.getId());
+        preparedStatement.setInt(2, teacher.getAge());
+        preparedStatement.setLong(3, teacher.getId());
+        preparedStatement.executeUpdate();
     }
 
-    public void deleteByName(Connection connection, Teacher teacher) throws SQLException {
+    public int deleteByName(Connection connection, String teacher) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM teacher WHERE name = ?;");
-        preparedStatement.setString(1, teacher.getName());
+        preparedStatement.setString(1, teacher);
+        return preparedStatement.executeUpdate();
+    }
+
+    public Teacher findFirstTeacherByName(Connection connection, String name) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT * FROM teacher WHERE name = ?;");
+        preparedStatement.setString(1, name);
+        try (ResultSet rs = preparedStatement.executeQuery()) {
+            List<Teacher> teacherList = toTeacherList(rs);
+            if (teacherList.isEmpty()) {
+                throw new RuntimeException("Учитель " + name + " не найден");
+            }
+            if (teacherList.size() > 1) {
+                throw new RuntimeException("Найдено несколько учителей " + name);
+            }
+            return teacherList.getFirst();
+        }
     }
 
     public List<Teacher> foundTeachersByName(Connection connection, String name) throws SQLException {

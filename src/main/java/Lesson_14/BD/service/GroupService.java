@@ -44,10 +44,14 @@ public class GroupService {
         }
     }
 
-    public void delete(DataSource dataSource, Group group) {
+    public void delete(DataSource dataSource, String group) {
         try (Connection connection = dataSource.getConnection()) {
-            groupRepository.delete(connection, group);
-            System.out.println("Удаление " + group.getName() + " успешно");
+            int counter = groupRepository.delete(connection, group);
+            if (counter > 0) {
+                System.out.println("Удаление " + group + " успешно");
+            } else {
+                System.out.println(group + " не найден");
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка во время удаления", e);
         }

@@ -8,9 +8,9 @@ import Lesson_14.BD.repository.StudentRepository;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class StudentService {
     private final DataSource dataSource;
@@ -54,25 +54,17 @@ public class StudentService {
         }
     }
 
-    public Student findByName(DataSource dataSource, String name) {
+    public List<Student> findAll(DataSource dataSource) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM student WHERE name = ?;"
-            );
-            preparedStatement.setString(1, name);
+            return studentRepository.findAllStudent(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Student(
-                            resultSet.getLong("id"),
-                            resultSet.getString("name"),
-                            resultSet.getInt("age"),
-                            resultSet.getFloat("scholarship"),
-                            resultSet.getObject("group_id", Long.class)
-                    );
-                }
-            }
-            throw new RuntimeException("Студент не найден");
+    public Student findFirstByName(DataSource dataSource, String name) {
+        try (Connection connection = dataSource.getConnection()) {
+            return studentRepository.findFirstByName(connection, name);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

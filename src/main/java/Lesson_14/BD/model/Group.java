@@ -3,17 +3,17 @@ package Lesson_14.BD.model;
 public class Group {
     private Long id;
     private String name;
-    private Long faculty_id;
+    private Long facultyId;
 
-    public Group(Long id, String name, Long faculty_id) {
+    public Group(Long id, String name, Long facultyId) {
         this.id = id;
         this.name = name;
-        this.faculty_id = faculty_id;
+        this.facultyId = facultyId;
     }
 
-    public Group(String name, Long faculty_id) {
+    public Group(String name, Long facultyId) {
         this.name = name;
-        this.faculty_id = faculty_id;
+        this.facultyId = facultyId;
     }
 
     public Long getId() {
@@ -24,8 +24,8 @@ public class Group {
         return name;
     }
 
-    public Long getFaculty_id() {
-        return faculty_id;
+    public Long getFacultyId() {
+        return facultyId;
     }
 
     public void setId(Long id) {
@@ -36,8 +36,8 @@ public class Group {
         this.name = name;
     }
 
-    public void setFaculty_id(Long faculty_id) {
-        this.faculty_id = faculty_id;
+    public void setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Group {
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", faculty_id=" + faculty_id +
+                ", faculty_id=" + facultyId +
                 '}';
     }
 }

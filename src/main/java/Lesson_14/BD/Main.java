@@ -1,10 +1,7 @@
 package Lesson_14.BD;
 
 import Lesson_14.BD.configuration.ConnectionConfiguration;
-import Lesson_14.BD.model.Faculty;
-import Lesson_14.BD.model.Group;
-import Lesson_14.BD.model.Student;
-import Lesson_14.BD.model.Teacher;
+import Lesson_14.BD.model.*;
 import Lesson_14.BD.repository.*;
 import Lesson_14.BD.service.*;
 import org.postgresql.ds.PGSimpleDataSource;
@@ -43,44 +40,56 @@ public class Main {
         System.out.println("-----------------");
 
         Collection<Faculty> faculties = List.of(new Faculty("История"), new Faculty("Философия"));
-        Group group = new Group("Группа", 1L);
+        Graduate graduate = new Graduate("Пчелка", "DIPL-2023-001", LocalDate.of(2023, 1, 30));
+        Group group = new Group("Группа", 2L);
         Student student = new Student("Петров", 25);
         Teacher teacher = new Teacher("Иванова", 27);
-        studentService.insert(student);
 
         System.out.println("Проверка Faculty");
         facultyService.insertFaculty(faculties);
-        Faculty updateFaculty = facultyService.findByName("История");
+        Faculty updateFaculty = facultyService.findByName(dataSource, "История");
         updateFaculty.setName("Химия");
         facultyService.update(dataSource, updateFaculty);
-        facultyService.deleteByName(dataSource, updateFaculty);
+        facultyService.deleteByName(dataSource, "Химия");
         System.out.println("----------------");
+
+        System.out.println("Проверка Graduate");
+        graduateService.insert(graduate);
+        List<Graduate> graduateList = graduateService.findAll(dataSource);
+        Graduate testGraduate = graduateService.findById(dataSource, 1L);
+        System.out.println(graduateList);
+        System.out.println(testGraduate);
+        graduateService.deleteById(dataSource, 1L);
+        System.out.println("--------------------");
 
         System.out.println("Проверка Group");
         groupService.insert(dataSource, List.of(group));
         Group updateGroup = groupService.findGroupByName(dataSource, "Группа");
         updateGroup.setName("Измененная группа");
         groupService.update(dataSource, updateGroup);
-//        groupService.delete(dataSource,updateGroup);
+        groupService.delete(dataSource, "Измененная группа");
         System.out.println("----------------");
 
         System.out.println("Проверка Teacher");
         teacherService.insert(dataSource, List.of(teacher));
-        Teacher updateTeacher = teacherService.foundTeacherByName(dataSource, "Иванова");
+        Teacher updateTeacher = teacherService.findFirstTeacherByName(dataSource, "Иванова");
         updateTeacher.setName("Захаров");
         teacherService.update(dataSource, updateTeacher);
-        teacherService.delete(dataSource, updateTeacher);
+        teacherService.delete(dataSource, "Захаров");
         System.out.println("----------------");
 
         System.out.println("Проверка Студент");
         studentService.insert(student);
-        Student updateStudent = studentService.findByName(dataSource, "Петров");
+        List<Student> allStudents = studentService.findAll(dataSource);
+        System.out.println(allStudents);
+
+        Student updateStudent = studentService.findFirstByName(dataSource, "Петров");
         updateStudent.setName("Печенье");
         studentService.update(dataSource, updateStudent);
         studentService.graduation(
                 updateStudent,
-                "DIPL-2023-001",
-                LocalDate.of(2023, 6, 30)
+                "N007",
+                LocalDate.of(2025, 7, 3)
         );
     }
 }

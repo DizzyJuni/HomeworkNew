@@ -23,6 +23,13 @@ public class Graduate {
         this.graduationYear = graduationYear;
     }
 
+    public Graduate(String name, String diplomatNumber, LocalDate graduationYear, Faculty faculty) {
+        this.name = name;
+        this.diplomatNumber = diplomatNumber;
+        this.graduationYear = graduationYear;
+        this.faculty = faculty;
+    }
+
     public Graduate() {
     }
 
@@ -64,5 +71,16 @@ public class Graduate {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    @Override
+    public String toString() {
+        return "Graduate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", diplomatNumber='" + diplomatNumber + '\'' +
+                ", graduationYear=" + graduationYear +
+                ", faculty=" + faculty +
+                '}';
     }
 }

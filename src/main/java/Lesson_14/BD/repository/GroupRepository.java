@@ -19,10 +19,10 @@ public class GroupRepository {
                 \tfaculty_id bigint references faculty (id)\s
                 );""");
         statement.execute("create index if not exists group_name_idx on \"group\" (name);");
-        //statement.execute("ALTER TABLE \"GROUP\" " +
-        //      "add constraint fk_group_faculty " +
-        //    "foreign key (faculty_id) " +
-        //  "references faculty (id);");
+//        statement.execute("ALTER TABLE \"GROUP\" " +
+//                "add constraint fk_group_faculty " +
+//                "foreign key (faculty_id) " +
+//                "references faculty (id);");
     }
 
     public void insert(Connection connection, Collection<Group> groups) throws SQLException {
@@ -36,14 +36,15 @@ public class GroupRepository {
         );
         preparedStatement.setString(1, group.getName());
         preparedStatement.setLong(2, group.getId());
-        Statement statement = connection.createStatement();
+        preparedStatement.executeUpdate();
     }
 
-    public void delete(Connection connection, Group group) throws SQLException {
+    public int delete(Connection connection, String group) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM \"group\" WHERE name = ?;"
         );
-        preparedStatement.setString(1, group.getName());
+        preparedStatement.setString(1, group);
+        return preparedStatement.executeUpdate();
     }
 
     public Group findGroupByName(Connection connection, String name) throws SQLException {
@@ -68,7 +69,7 @@ public class GroupRepository {
             stringBuilder.append(delimiter)
                     .append("(")
                     .append("'").append(g.getName()).append("'").append(",")
-                    .append(g.getFaculty_id())
+                    .append(g.getFacultyId())
                     .append(")");
             delimiter = ",";
         }
